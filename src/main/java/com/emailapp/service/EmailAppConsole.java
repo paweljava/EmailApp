@@ -8,14 +8,7 @@ import java.util.*;
 
 public class EmailAppConsole {
 
-    public EmailAppConsole(List<Employee> employee){
-        this.employeeList = employee;
-    }
 
-    public EmailAppConsole() {
-        this.employeeList = new ArrayList<>(List.of());
-    }
-    private final List <Employee> employeeList;
 
     public Employee inputEmployeeData() {
         Department[] departments = Department.values();

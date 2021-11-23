@@ -14,7 +14,6 @@ public class EmailAppService {
     public void process() {
         Scanner scanner = new Scanner(System.in);
         while (true) {
-
             System.out.println("Type \"exit\" to exit ");
             System.out.println("Type \"1\" to create employee ");
             System.out.println("Type \"2\" to ");
@@ -26,9 +25,9 @@ public class EmailAppService {
             switch (choose) {
                 case "exit" -> exit();
                // case "1" -> emailAppCRUD.employeeCreate(emailAppConsole.inputEmployeeData());
-              /*  case "2" -> addMeal(scanner);
-                case "3" -> employ;
-                case "4" -> showMeals(scanner);*/
+               // case "2" -> ;
+               // case "3" -> ;
+               // case "4" -> ;*/
                 default -> System.out.println("Type correct value!");
             }
         }

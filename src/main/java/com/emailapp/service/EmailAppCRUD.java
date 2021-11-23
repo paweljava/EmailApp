@@ -15,9 +15,6 @@ public class EmailAppCRUD {
     public EmailAppCRUD() {
         this.employeeList = new ArrayList<>();
     }
-    public EmailAppConsole emailAppConsole = new EmailAppConsole();
-
-
 
     private final List<Employee> employeeList;
 
@@ -29,6 +26,9 @@ public class EmailAppCRUD {
         return employee;
     }
     // Read
+    public List<Employee> getEmployeeList () {
+        return employeeList;
+    }
     // Update
     // Delete
 }
