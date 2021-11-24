@@ -6,13 +6,13 @@ import com.emailapp.model.Employee;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EmailAppCRUD {
+public class EmailAppCrud {
 
     /*public EmailAppCRUD (List <Employee> employee) {
         this.employeeList = employee;
     }*/
 
-    public EmailAppCRUD() {
+    public EmailAppCrud() {
         this.employeeList = new ArrayList<>();
     }
 

@@ -1,10 +1,12 @@
 package com.emailapp.service;
 
+import com.emailapp.model.Employee;
+
 import java.util.Scanner;
 
 public class EmailAppService {
 
-    public EmailAppCRUD emailAppCRUD = new EmailAppCRUD();
+    public EmailAppCrud emailAppCRUD = new EmailAppCrud();
     public EmailAppConsole emailAppConsole = new EmailAppConsole();
 
 
@@ -24,7 +26,7 @@ public class EmailAppService {
 
             switch (choose) {
                 case "exit" -> exit();
-               // case "1" -> emailAppCRUD.employeeCreate(emailAppConsole.inputEmployeeData());
+                case "1" -> getEmployee();
                // case "2" -> ;
                // case "3" -> ;
                // case "4" -> ;*/
@@ -33,8 +35,15 @@ public class EmailAppService {
         }
     }
 
+    public Employee getEmployee() {
+        Employee employee = emailAppConsole.inputEmployeeData();
+        return emailAppCRUD.employeeCreate(employee.getFirstName(), employee.getLastName(), employee.getDepartment());
+    }
+
     public void exit() {
         System.out.println("Bye bye");
         System.exit(0);
     }
+
+
 }
