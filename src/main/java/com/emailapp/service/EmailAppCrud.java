@@ -31,4 +31,7 @@ public class EmailAppCrud {
     }
     // Update
     // Delete
+    public void employeeDelete (String name) {
+
+    }
 }

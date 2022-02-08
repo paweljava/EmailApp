@@ -21,6 +21,8 @@ public class EmailAppService {
             System.out.println("Type \"2\" to ");
             System.out.println("Type \"3\" to ");
             System.out.println("Type \"4\" to ");
+            System.out.println("Type \"5\" to ");
+            System.out.println("Type \"6\" to ");
             System.out.print("What is yours choose: ");
             String choose = scanner.nextLine();
 
@@ -38,6 +40,11 @@ public class EmailAppService {
     public Employee getEmployee() {
         Employee employee = emailAppConsole.inputEmployeeData();
         return emailAppCRUD.employeeCreate(employee.getFirstName(), employee.getLastName(), employee.getDepartment());
+    }
+
+    public Employee createEmployee() {
+
+        return createEmployee();
     }
 
     public void exit() {
