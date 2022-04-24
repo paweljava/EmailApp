@@ -1,0 +1,13 @@
+1. Stworzyc stan poczatkowy emailapp
+    a. maja byc dwie firmy
+    b. jedna z tych firm ma miec trzy departamenty
+    c. jeden z tych departamentow ma miec dwojke pracownikow
+    d. dane dowolne
+
+2. Stworzyc mozliwosc dodawania pracownika do istniejacego departamentu w istniejacej firmie
+3. Stworzyc mozliwosc usuwania pracownika z istniejacego departamentu w istniejacej firmie
+4. Stworzyc mozliwosc edycji emaila pracownika z istniejacego departamentu w istniejacej firmie
+5. Wypisanie wszystkiego
+6. Stworzenie testow z punktu od 2 do 4
+    a. stworzyc rozne pozytywne i negatywne scenariusze.
+
