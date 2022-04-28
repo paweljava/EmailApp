@@ -48,38 +48,11 @@ public class EmailAppConsole {
         throw new IllegalStateException();*/
     }
 
-    public Employee inputEmployeeData() {
-        System.out.print("Type employee firstname: ");
-        var firstName = readLine();
-        System.out.print("Type employee lastName: ");
-        var lastName = readLine();
-        System.out.println(emailAppCrud.getCompanyList());
-        System.out.print("Type employee company name from list: ");
-        var companyName = readLine();
-        for (Company company : emailAppCrud.getCompanyList()) {
-            if (company.getCompanyName().equals(companyName)) {
-                companyName = company.getCompanyName();
-                System.out.println();
-            }
-        }
-        System.out.print("Type employee department name: ");
-        var departmentName = readLine();
-        for (Department department : emailAppCrud.getDepartmentList()) {
-            if (department.getDepartmentName().equals(departmentName)) {
-                departmentName = department.getDepartmentName();
-                System.out.println();
-            }
-        }
-        String address = firstName + "." + lastName + "." + departmentName + "@" + companyName + ".com";
-        int capacity = 100;
-        String password = generatePassword(5);
-        Email email = new Email(password, capacity, address);
-        var employee = new Employee(UUID.randomUUID(), firstName, lastName, email);
-        //var employee = new Employee(firstName, lastName, departmentName, email);
-        return employee;
-    }
+    /*public Employee inputEmployeeData() {
 
-    private String generatePassword(int passwordSize) {
+    }*/
+
+    public String generatePassword(int passwordSize) {
         Random random = new Random();
         var result = new StringBuilder();
         for (int i = 0; i < passwordSize; i++) {

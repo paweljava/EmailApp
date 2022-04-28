@@ -2,6 +2,7 @@ package com.emailapp.service;
 
 import com.emailapp.model.Company;
 import com.emailapp.model.Department;
+import com.emailapp.model.Email;
 import com.emailapp.model.Employee;
 
 import java.util.Scanner;
@@ -75,7 +76,7 @@ public class EmailAppService {
             if (company.getCompanyName().equals(companyName)) {
                 final var department = new Department(UUID.randomUUID(), departmentName);
                 company.getDepartmentList().add(department);
-                System.out.println("Added department to company" + companyName);
+                System.out.println("Added department to" + companyName);
                 System.out.println();
                 return department;
             }
@@ -84,8 +85,49 @@ public class EmailAppService {
     }
 
     public Employee createEmployee() {
-        Employee employee = emailAppConsole.inputEmployeeData();
-        return emailAppCrud.employeeCreate(employee.getUuid(), employee.getFirstName(), employee.getLastName(), employee.getEmail());
+        System.out.print("Type employee company name from list: \n");
+        var companyName = emailAppConsole.readLine();
+        for (Company company : emailAppCrud.getCompanyList()) {
+            if (!company.getCompanyName().equals(companyName)) { //dlacvzego tutaj nie moge zrobic negacji ??
+         }
+            //else return; - jak wyjsc z metody do menu bez parametrow
+        }
+        System.out.print("Type employee firstname: ");
+        var firstName = emailAppConsole.readLine();
+        System.out.print("Type employee lastName: ");
+        var lastName = emailAppConsole.readLine();
+        System.out.println(emailAppCrud.getCompanyList());
+        System.out.print("Type employee department name: ");
+        for (Company company : emailAppCrud.getCompanyList()) {
+            if (company.getCompanyName().equals(companyName)) {
+                //companyName = company.getCompanyName();
+                var departmentName = emailAppConsole.readLine();
+                for (Department department : company.getDepartmentList()) {
+                    if (department.getDepartmentName().equals(departmentName)) {
+                        final var employee = new Employee(UUID.randomUUID(), firstName, lastName, newEmailAddress(firstName, lastName, companyName, emailAppConsole.generatePassword(5), 100));
+                        department.getEmployeeList().add(employee);
+                    }
+                    departmentName = department.getDepartmentName();
+                    System.out.println();
+                }
+            }
+        }
+
+        /*String address = firstName + "." + lastName + "." + departmentName + "@" + companyName + ".com";
+        int capacity = 100;
+        String password = generatePassword(5);
+        Email email = new Email(password, capacity, address);
+        var employee = new Employee(UUID.randomUUID(), firstName, lastName, email);
+        //var employee = new Employee(firstName, lastName, departmentName, email);
+        return employee;*/
+        /*Employee employee = emailAppConsole.inputEmployeeData();
+        return emailAppCrud.employeeCreate(employee.getUuid(), employee.getFirstName(), employee.getLastName(), employee.getEmail());*/
+    }
+
+    public Email newEmailAddress(String firstName, String lastName, String companyName, String password, int capacity) {
+        var address = firstName + "." + lastName + "." + "@" + companyName + ".com";
+        Email email = new Email(address, password, capacity);
+        return email;
     }
 
     public void showCompanies() {

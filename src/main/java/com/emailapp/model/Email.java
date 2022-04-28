@@ -1,14 +1,14 @@
 package com.emailapp.model;
 
 public class Email {
+    private final String address;
     private String password;
     private int capacity;
-    private String address;
 
-    public Email(String password, int capacity, String address) {
+    public Email(String address, String password, int capacity) {
+        this.address = address;
         this.password = password;
         this.capacity = capacity;
-        this.address = address;
     }
 
     public String getPassword() {
