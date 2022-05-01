@@ -50,8 +50,8 @@ public class EmailAppService {
                 case "3" -> createEmployee();
                 case "4" -> showCompanies();
                 //case "4" -> emailAppCrud.getCompanyList();
-                case "5" -> emailAppCrud.getDepartmentList();
-                case "6" -> emailAppCrud.getEmployeeList();
+                case "5" -> showDepartments();
+                case "6" -> showDEmployees();
                 // case "3" -> ;
                 // case "4" -> ;
                 // case "5" -> ;
@@ -84,7 +84,7 @@ public class EmailAppService {
         throw new IllegalStateException();
     }
 
-    public Employee createEmployee() {
+    public void createEmployee() {
         System.out.print("Type employee company name from list: \n");
         var companyName = emailAppConsole.readLine();
         for (Company company : emailAppCrud.getCompanyList()) {
@@ -105,9 +105,14 @@ public class EmailAppService {
                 for (Department department : company.getDepartmentList()) {
                     if (department.getDepartmentName().equals(departmentName)) {
                         final var employee = new Employee(UUID.randomUUID(), firstName, lastName, newEmailAddress(firstName, lastName, companyName, emailAppConsole.generatePassword(5), 100));
+                        //emailAppCrud.employeeCreate(employee);
                         department.getEmployeeList().add(employee);
                     }
-                    departmentName = department.getDepartmentName();
+                    //departmentName = department.getDepartmentName();
+                    System.out.println(companyName);
+                    System.out.println(departmentName);
+                    System.out.println(firstName);
+                    System.out.println(lastName);
                     System.out.println();
                 }
             }
@@ -133,6 +138,16 @@ public class EmailAppService {
     public void showCompanies() {
         emailAppCrud.getCompanyList().stream()
                 .map(Company::getCompanyName)
+                .forEach(System.out::println);
+    }
+    public  void  showDepartments() {
+        emailAppCrud.getCompanyList().stream()
+                .map(Company::getDepartmentList)
+                .forEach(System.out::println);
+    }
+    public void  showDEmployees() {
+        emailAppCrud.getDepartmentList().stream()
+                .map(Department::getEmployeeList)
                 .forEach(System.out::println);
     }
 

@@ -1,7 +1,7 @@
 package com.emailapp.model;
 
 public class Email {
-    private final String address;
+    private String address;
     private String password;
     private int capacity;
 

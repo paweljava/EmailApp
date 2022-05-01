@@ -45,11 +45,11 @@ public class EmailAppCrud {
         companyList.add (company);
         return company;
     }*/
-    public Employee employeeCreate(UUID uuid, String firstName, String lastName, Email email) {
-        Employee employee = new Employee(uuid, firstName, lastName, email);
-        companyList.employeeList.add(employee);
-        return employee;
-    }
+//    public boolean employeeCreate(Employee employee) {
+//        //Employee employee = new Employee(uuid, firstName, lastName, email);
+//        companyList(getDepartmentList(getEmployeeList().add(employee)));
+//        return ;
+//    }
     // Read
     public List<Employee> getEmployeeList () {
         return employeeList;

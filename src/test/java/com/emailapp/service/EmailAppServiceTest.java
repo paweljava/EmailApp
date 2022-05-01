@@ -3,7 +3,7 @@ package com.emailapp.service;
 public class EmailAppServiceTest {
 
 
-    private final EmailAppService underTest = new EmailAppService();
+    //private final EmailAppService underTest = new EmailAppService();
 
     /*@Test
     void getEmployee() {
