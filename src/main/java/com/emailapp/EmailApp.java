@@ -12,8 +12,7 @@ import java.util.ArrayList;
 public class EmailApp {
     public static void main (String[] args) {
 
-
-        final var emailAppService = new EmailAppService(new EmailAppCrud(), new EmailAppConsole());
+        var emailAppService = new EmailAppService(new EmailAppCrud(), new EmailAppConsole());
 
         emailAppService.process();
     }

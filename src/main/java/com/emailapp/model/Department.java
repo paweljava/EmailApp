@@ -1,12 +1,15 @@
 package com.emailapp.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import static java.util.UUID.randomUUID;
+
 public class Department {
-    private UUID uuid;
+    private UUID uuid = randomUUID();
     private String departmentName;
-    private List <Employee> employeeList;
+    private List <Employee> employeeList = new ArrayList<>();
 
     public Department(UUID uuid, String departmentName) {
         this.uuid = uuid;

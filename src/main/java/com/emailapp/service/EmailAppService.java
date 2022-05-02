@@ -50,8 +50,8 @@ public class EmailAppService {
                 case "3" -> createEmployee();
                 case "4" -> showCompanies();
                 //case "4" -> emailAppCrud.getCompanyList();
-                case "5" -> showDepartments();
-                case "6" -> showDEmployees();
+                case "5" -> showDepartments(emailAppConsole.inputCompanyName().getCompanyName());
+                case "6" -> showEmployees();
                 // case "3" -> ;
                 // case "4" -> ;
                 // case "5" -> ;
@@ -70,13 +70,13 @@ public class EmailAppService {
     public Department createDepartment() {
         var departmentName = emailAppConsole.inputDepartmentName();
         System.out.print("Type company name to add department to particular company: ");
-        var companyName = emailAppConsole.readLine();
+        var companyName = emailAppConsole.inputCompanyName();
 
         for (Company company : emailAppCrud.getCompanyList()) {
-            if (company.getCompanyName().equals(companyName)) {
-                final var department = new Department(UUID.randomUUID(), departmentName);
+            if (company.getCompanyName().equals(companyName.getCompanyName())) {
+                var department = new Department(UUID.randomUUID(), departmentName);
                 company.getDepartmentList().add(department);
-                System.out.println("Added department to" + companyName);
+                System.out.println("Added department to: " + companyName);
                 System.out.println();
                 return department;
             }
@@ -86,37 +86,45 @@ public class EmailAppService {
 
     public void createEmployee() {
         System.out.print("Type employee company name from list: \n");
-        var companyName = emailAppConsole.readLine();
-        for (Company company : emailAppCrud.getCompanyList()) {
+        showCompanies();
+        var companyName = emailAppConsole.inputCompanyName();
+        isCompanyExist(companyName.getCompanyName());
+        /*for (Company company : emailAppCrud.getCompanyList()) {
             if (!company.getCompanyName().equals(companyName)) { //dlacvzego tutaj nie moge zrobic negacji ??
-         }
+            }
             //else return; - jak wyjsc z metody do menu bez parametrow
-        }
+        }*/
         System.out.print("Type employee firstname: ");
         var firstName = emailAppConsole.readLine();
-        System.out.print("Type employee lastName: ");
+        System.out.print("Type employee lastname: ");
         var lastName = emailAppConsole.readLine();
         System.out.println(emailAppCrud.getCompanyList());
-        System.out.print("Type employee department name: ");
+        System.out.println("Type employee department name from list: ");
+        showDepartments(companyName.getCompanyName());
+        var departmentName = emailAppConsole.readLine();
+        isDepartmentExist(companyName.getCompanyName(), departmentName);
         for (Company company : emailAppCrud.getCompanyList()) {
-            if (company.getCompanyName().equals(companyName)) {
-                //companyName = company.getCompanyName();
-                var departmentName = emailAppConsole.readLine();
+            var a = company.getCompanyName();
+            System.out.println(a);
+            System.out.println(companyName.getCompanyName());
+            if (company.getCompanyName().equals(companyName.getCompanyName())) {
                 for (Department department : company.getDepartmentList()) {
                     if (department.getDepartmentName().equals(departmentName)) {
-                        final var employee = new Employee(UUID.randomUUID(), firstName, lastName, newEmailAddress(firstName, lastName, companyName, emailAppConsole.generatePassword(5), 100));
-                        //emailAppCrud.employeeCreate(employee);
+                        final var employee = new Employee(UUID.randomUUID(), firstName, lastName, newEmailAddress(firstName, lastName, companyName.getCompanyName(), emailAppConsole.generatePassword(5), 100));
                         department.getEmployeeList().add(employee);
+                        System.out.println();
+                        System.out.println("Employee created: ");
+                        System.out.println(companyName.getCompanyName());
+                        System.out.println(departmentName);
+                        System.out.println(firstName);
+                        System.out.println(lastName);
+                        System.out.println();
+                        return;
                     }
-                    //departmentName = department.getDepartmentName();
-                    System.out.println(companyName);
-                    System.out.println(departmentName);
-                    System.out.println(firstName);
-                    System.out.println(lastName);
-                    System.out.println();
                 }
             }
         }
+
 
         /*String address = firstName + "." + lastName + "." + departmentName + "@" + companyName + ".com";
         int capacity = 100;
@@ -140,15 +148,58 @@ public class EmailAppService {
                 .map(Company::getCompanyName)
                 .forEach(System.out::println);
     }
-    public  void  showDepartments() {
-        emailAppCrud.getCompanyList().stream()
-                .map(Company::getDepartmentList)
+
+    public void showDepartments(String companyName) {
+
+        //var companyName = emailAppConsole.readLine();
+        var company = emailAppCrud.getCompanyList().stream()
+                .filter((Company companies) -> companies.getCompanyName().equals(companyName))
+                .findAny().get();
+        company.getDepartmentList().stream()
+                .map(Department::getDepartmentName)
                 .forEach(System.out::println);
     }
-    public void  showDEmployees() {
-        emailAppCrud.getDepartmentList().stream()
-                .map(Department::getEmployeeList)
+
+    public void showEmployees() {
+        System.out.println("Type company name: ");
+        final var companyName = emailAppConsole.readLine();
+        isCompanyExist(companyName);
+        System.out.println("Type department name: ");
+        final var departmentName = emailAppConsole.readLine();
+        isDepartmentExist(companyName, departmentName);
+        final var company = emailAppCrud.getCompanyList().stream()
+                .filter((Company companies) -> companies.getCompanyName().equals(companyName))
+                .findAny().get();
+        final var department = company.getDepartmentList().stream()
+                .filter((Department departments) -> departments.getDepartmentName().equals(departmentName))
+                .findAny().get();
+        department.getEmployeeList().stream()
+                .map(employee -> employee.getFirstName() + " " + employee.getLastName() + " " + employee.getEmail().getAddress().toLowerCase())
                 .forEach(System.out::println);
+    }
+
+    public void isCompanyExist(String companyName) {
+        if (emailAppCrud.getCompanyList().stream().noneMatch(company -> company.getCompanyName().equals(companyName))) {
+            System.out.println("Wrong company name or not exist");
+            System.out.println();
+            return;
+        }
+    }
+
+    public void isDepartmentExist(String companyName, String departmentName) {
+        System.out.println("Type department name of company: " + companyName);
+        final var company = emailAppCrud.getCompanyList().stream()
+                .filter((Company companies) -> companies.getCompanyName().equals(companyName))
+                .findAny().get();
+        /*final var department = company.getDepartmentList().stream()
+                .filter((Department r) -> r.getDepartmentName().equals(departmentName))
+                .findAny().get();*/
+        if (company.getDepartmentList().stream()
+                .noneMatch(departments -> company.getDepartmentList().equals(departmentName))) {
+            System.out.println("Wrong department name or not exist");
+            System.out.println();
+            return;
+        }
     }
 
     public void exit() {
