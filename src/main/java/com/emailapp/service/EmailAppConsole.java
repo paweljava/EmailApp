@@ -21,10 +21,18 @@ public class EmailAppConsole {
         return scanner.nextLine();
     }
 
+/*
     public Company inputCompanyName() {
         System.out.print("Type company name: ");
         var name = readLine();
+        System.out.println();
         return new Company(UUID.randomUUID(), name);
+    }
+*/
+    public String inputCompanyName() {
+        var name = readLine();
+        System.out.println();
+        return name;
     }
 
     public String inputDepartmentName() {

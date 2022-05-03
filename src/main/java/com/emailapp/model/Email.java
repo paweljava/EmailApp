@@ -11,6 +11,15 @@ public class Email {
         this.capacity = capacity;
     }
 
+    @Override
+    public String toString() {
+        return "Email{" +
+                "address='" + address + '\'' +
+                ", password='" + password + '\'' +
+                ", capacity=" + capacity +
+                '}';
+    }
+
     public String getPassword() {
         return password;
     }

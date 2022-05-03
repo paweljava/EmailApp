@@ -5,11 +5,12 @@ import java.util.List;
 import java.util.UUID;
 
 import static java.util.UUID.randomUUID;
+//MARKETING, OPERATIONS, FINANCE, SALES, HR, PURCHASE, RESEARCH, PRODUCTION, SERVICE
 
 public class Department {
-    private UUID uuid = randomUUID();
+    private UUID uuid;
     private String departmentName;
-    private List <Employee> employeeList = new ArrayList<>();
+    private List<Employee> employeeList = new ArrayList<>();
 
     public Department(UUID uuid, String departmentName) {
         this.uuid = uuid;
@@ -41,5 +42,4 @@ public class Department {
     public void setEmployeeList(List<Employee> employeeList) {
         this.employeeList = employeeList;
     }
-//MARKETING, OPERATIONS, FINANCE, SALES, HR, PURCHASE, RESEARCH, PRODUCTION, SERVICE
 }
