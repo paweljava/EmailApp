@@ -149,6 +149,9 @@ public class EmailAppService {
     public void showDepartments() {
         System.out.println("Type company name to display departments: ");
         var companyName = emailAppConsole.inputCompanyName();
+        if (!isCompanyExist(companyName)) {
+            return;
+        }
 
         /* stream bez zagniezdzania
         var company = emailAppCrud.getCompanyList().stream()
@@ -170,7 +173,9 @@ public class EmailAppService {
     public void showEmployees() {
         System.out.println("Type company name: ");
         final var companyName = emailAppConsole.readLine();
-        isCompanyExist(companyName);
+        if (!isCompanyExist(companyName)) {
+            return;
+        }
         System.out.println("Type department name: ");
         final var departmentName = emailAppConsole.readLine();
         isDepartmentExist(companyName, departmentName);
@@ -205,11 +210,18 @@ public class EmailAppService {
     public void departmentDelete() {
         System.out.println("Type company name ");
         var companyName = emailAppConsole.inputCompanyName();
+        if (!isCompanyExist(companyName)) {
+            return;
+        }
+        System.out.println("Type department name ");
+        var departmentName = emailAppConsole.inputCompanyName();
+
 
     }
 
     public boolean isCompanyExist(String companyName) {
-        if (!emailAppCrud.getCompanyList().stream().anyMatch(company -> company.getCompanyName().equals(companyName))) {
+        if (emailAppCrud.getCompanyList().stream()
+                .noneMatch(company -> company.getCompanyName().equals(companyName))) {
             System.out.println("Wrong company name or not exist");
             System.out.println();
             return false;
@@ -217,15 +229,10 @@ public class EmailAppService {
     }
 
     public void isDepartmentExist(String companyName, String departmentName) {
-        //System.out.println("Type department name of company: " + companyName);
-        final var company = emailAppCrud.getCompanyList().stream()
-                .filter((Company companies) -> companies.getCompanyName().equals(companyName))
-                .findAny().get();
-        /*final var department = company.getDepartmentList().stream()
-                .filter((Department r) -> r.getDepartmentName().equals(departmentName))
-                .findAny().get();*/
-        if (company.getDepartmentList().stream()
-                .noneMatch(departments -> company.getDepartmentList().equals(departmentName))) {
+        if (emailAppCrud.getCompanyList().stream()
+                .filter(c -> c.getCompanyName().equals(companyName))
+                .flatMap(d -> d.getDepartmentList().stream())
+                .noneMatch(d -> d.getDepartmentName().equals(departmentName))) {
             System.out.println("Wrong department name or not exist");
             System.out.println();
             return;
