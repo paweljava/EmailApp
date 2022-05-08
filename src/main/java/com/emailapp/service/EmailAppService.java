@@ -52,12 +52,12 @@ public class EmailAppService {
                 case "4" -> showCompanies();
                 case "5" -> showDepartments();
                 case "6" -> showEmployees();
-                // case "7" -> ;
+                case "7" -> updateCompanyName();
                 // case "8" -> ;
                 // case "9" -> ;
                 case "10" -> companyDelete();
                 case "11" -> departmentDelete();
-                //case "12" -> employeeDelete();
+                case "12" -> employeeDelete();
                 default -> System.out.println("Type correct value!");
             }
         }
@@ -75,12 +75,11 @@ public class EmailAppService {
         return emailAppCrud.companyCreate(UUID.randomUUID(), name);
     }
 
-
     public void createDepartment() {
         var departmentName = emailAppConsole.inputDepartmentName();
         System.out.print("Type company name to add department to particular company: ");
         var companyName = emailAppConsole.inputCompanyName();
-        if (!isCompanyExist(companyName)) {
+        if (isCompanyExist(companyName)) {
             return;
         }
 
@@ -100,7 +99,7 @@ public class EmailAppService {
         System.out.print("Type employee company name from list: \n");
         showCompanies();
         var companyName = emailAppConsole.inputCompanyName();
-        if (!isCompanyExist(companyName)) {
+        if (isCompanyExist(companyName)) {
             return;
         }
         System.out.print("Type employee firstname: ");
@@ -149,7 +148,7 @@ public class EmailAppService {
     public void showDepartments() {
         System.out.println("Type company name to display departments: ");
         var companyName = emailAppConsole.inputCompanyName();
-        if (!isCompanyExist(companyName)) {
+        if (isCompanyExist(companyName)) {
             return;
         }
 
@@ -173,7 +172,7 @@ public class EmailAppService {
     public void showEmployees() {
         System.out.println("Type company name: ");
         final var companyName = emailAppConsole.readLine();
-        if (!isCompanyExist(companyName)) {
+        if (isCompanyExist(companyName)) {
             return;
         }
         System.out.println("Type department name: ");
@@ -199,24 +198,108 @@ public class EmailAppService {
 
     }
 
+    public void updateCompanyName() {
+        System.out.print("Type company name to update name: ");
+        var companyName = emailAppConsole.inputCompanyName();
+        System.out.println(); // zobaczymy roznice
+        System.out.print("Type new company name: ");
+        var companyNewName = emailAppConsole.inputCompanyName();
+        if (isCompanyExist(companyName)) {
+            return;
+        }
+        var oldCompanyName = emailAppCrud.getCompanyList().stream()
+                .flatMap(company -> company.getUuid().)
+                .filter(c -> c.getCompanyName().equals(companyName)) {
+        var newCompany = oldCompanyName.g}
+        var a = emailAppCrud.getCompanyList().equals(oldCompanyName);
+                var newCompany
+        }
+
+    }
+
     public void companyDelete() {
         var companyName = emailAppConsole.inputCompanyName();
-        if (!isCompanyExist(companyName)) {
+        if (isCompanyExist(companyName)) {
             return;
         }
         emailAppCrud.companyDelete(companyName);
     }
 
     public void departmentDelete() {
-        System.out.println("Type company name ");
+        System.out.println("Type company name from list");
+        showCompanies();
         var companyName = emailAppConsole.inputCompanyName();
-        if (!isCompanyExist(companyName)) {
+        if (isCompanyExist(companyName)) {
             return;
         }
-        System.out.println("Type department name ");
+        System.out.println("Type department name from list");
+        showDepartments();
         var departmentName = emailAppConsole.inputCompanyName();
+        if (!isDepartmentExist(companyName, departmentName)) {
+            return;
+        }
 
 
+        /*emailAppCrud.getCompanyList().stream()
+                .filter(company -> company.getCompanyName().equals(companyName))
+                .flatMap(d -> d.getDepartmentList().stream())
+                .filter(department -> department.getDepartmentName().equals(departmentName)).
+               // .map(d -> d.getDepartmentList().stream())
+                .flatMap(d -> d.getDepartmentName().equals(departmentName))
+                .f
+        .fi                .filter(d -> d.().equals(departmentName))
+                .findAny().get();
+                .filter(department -> department.getDepartmentName().equals(departmentName))
+        var departmentListToDelete = emailAppCrud.getCompanyList().stream()
+                .filter(company -> company.getCompanyName().equals(companyName))
+                .findAny().get();*/
+
+
+        // wersja bez zagniezdzania
+        var departmentToDelete = (emailAppCrud.getCompanyList().stream()
+                .filter(company -> company.getCompanyName().equals(companyName))
+                .flatMap(d -> d.getDepartmentList().stream())
+                .filter(department -> department.getDepartmentName().equals(departmentName))
+                .findAny().get());
+        var findDepartmentList
+                = emailAppCrud.getCompanyList().stream()
+                .filter(company -> company.getCompanyName().equals(companyName))
+                .findAny().get();
+        findDepartmentList.getDepartmentList().remove(departmentToDelete);
+    }
+
+    public void employeeDelete() {
+        System.out.println("Type company name from list");
+        showCompanies();
+        var companyName = emailAppConsole.inputCompanyName();
+        if (isCompanyExist(companyName)) {
+            return;
+        }
+        System.out.println("Type department name from list");
+        showDepartments();
+        var departmentName = emailAppConsole.inputCompanyName();
+        if (!isDepartmentExist(companyName, departmentName)) {
+            return;
+        }
+        System.out.println("Type employee name from list to delete");
+        showEmployees();
+        var employeeLastName = emailAppConsole.readLine();
+        if (!isEmployeeExist(companyName, departmentName, employeeLastName)) {
+            return;
+        }
+        // wersja bez zagniezdzania
+        var findEmployeeToDelete = (emailAppCrud.getCompanyList().stream()
+                .filter(company -> company.getCompanyName().equals(companyName))
+                .flatMap(d -> d.getDepartmentList().stream())
+                .filter(department -> department.getDepartmentName().equals(departmentName))
+                .flatMap(e -> e.getEmployeeList().stream())
+                .filter(e -> e.getLastName().equals(employeeLastName))
+                .findAny().get());
+        var findEmployeeList = emailAppCrud.getCompanyList().stream()
+                .filter(company -> company.getCompanyName().equals(companyName))
+                .flatMap(d -> d.getDepartmentList().stream())
+                .findAny().get();
+        findEmployeeList.getEmployeeList().remove(findEmployeeToDelete);
     }
 
     public boolean isCompanyExist(String companyName) {
@@ -224,19 +307,32 @@ public class EmailAppService {
                 .noneMatch(company -> company.getCompanyName().equals(companyName))) {
             System.out.println("Wrong company name or not exist");
             System.out.println();
-            return false;
-        } else return true;
+            return true;
+        } else return false;
     }
 
-    public void isDepartmentExist(String companyName, String departmentName) {
+    public boolean isDepartmentExist(String companyName, String departmentName) {
         if (emailAppCrud.getCompanyList().stream()
                 .filter(c -> c.getCompanyName().equals(companyName))
                 .flatMap(d -> d.getDepartmentList().stream())
                 .noneMatch(d -> d.getDepartmentName().equals(departmentName))) {
             System.out.println("Wrong department name or not exist");
             System.out.println();
-            return;
-        }
+            return false;
+        } else return true;
+    }
+
+    public boolean isEmployeeExist(String companyName, String departmentName, String employeeLastName) {
+        if (emailAppCrud.getCompanyList().stream()
+                .filter(c -> c.getCompanyName().equals(companyName))
+                .flatMap(d -> d.getDepartmentList().stream())
+                .filter(d -> d.getDepartmentName().equals(departmentName))
+                .flatMap(e -> e.getEmployeeList().stream())
+                .noneMatch(e -> e.getLastName().equals(employeeLastName))) {
+            System.out.println("Wrong department name or not exist");
+            System.out.println();
+            return false;
+        } else return true;
     }
 
     public void exit() {
