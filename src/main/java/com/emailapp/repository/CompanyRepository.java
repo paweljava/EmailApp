@@ -1,4 +1,4 @@
-package com.emailapp.service;
+package com.emailapp.repository;
 
 import com.emailapp.model.Company;
 import com.emailapp.model.Department;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class EmailAppCrud {
+public class CompanyRepository {
 
     private final Employee employee1 = new Employee(UUID.randomUUID(), "Adam", "Kowalski", new Email("Adam.Kowalski.Sales@abc.com", "abc", 100));
     private final Employee employee2 = new Employee(UUID.randomUUID(), "Jan", "Nowak", new Email("Jan.Nowak.Sales@abc.com", "abc", 100));
@@ -80,7 +80,11 @@ public class EmailAppCrud {
 
     // Update
     public void companyNameUpdate(String name, String newName) {
-
+        var companyToUpdate = companyList.stream()
+                .filter(c -> c.getCompanyName().equals(name))
+                .findAny().get();
+        getCompanyList().add(new Company(companyToUpdate.getUuid(), newName));
+        getCompanyList().remove(companyToUpdate);
     }
 
     // Delete

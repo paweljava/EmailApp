@@ -1,18 +1,14 @@
 package com.emailapp;
 
-import com.emailapp.model.Company;
-import com.emailapp.model.Department;
-import com.emailapp.model.Employee;
-import com.emailapp.service.EmailAppConsole;
-import com.emailapp.service.EmailAppCrud;
-import com.emailapp.service.EmailAppService;
-
-import java.util.ArrayList;
+import com.emailapp.service.InputProcessor;
+import com.emailapp.repository.CompanyRepository;
+import com.emailapp.service.CompanyService;
+import com.emailapp.service.PasswordGenerator;
 
 public class EmailApp {
     public static void main (String[] args) {
 
-        var emailAppService = new EmailAppService(new EmailAppCrud(), new EmailAppConsole());
+        var emailAppService = new CompanyService(new CompanyRepository(), new InputProcessor(), new PasswordGenerator());
 
         emailAppService.process();
     }
