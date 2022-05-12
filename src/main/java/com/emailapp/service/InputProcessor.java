@@ -8,8 +8,7 @@ import java.util.Scanner;
 
 public class InputProcessor {
     static String passwordSource = "qwertyuiopasdfghjklzxcvbnm";
-    CompanyRepository companyRepository = new CompanyRepository();
-
+    //CompanyRepository companyRepository = new CompanyRepository();
 
     private final Scanner scanner = new Scanner(System.in);
 
@@ -29,8 +28,11 @@ public class InputProcessor {
         return name;
     }
 
-    /*public Employee inputEmployeeData() {
-    }*/
+    public String inputEmployeeData() {
+        var name = readLine();
+        System.out.println();
+        return name;
+    }
 
 
 }

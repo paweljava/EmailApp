@@ -101,16 +101,41 @@ public class CompanyService {
             return;
         }
         System.out.print("Type employee firstname: ");
-        var firstName = inputProcessor.readLine();
+        var firstName = inputProcessor.inputEmployeeData();
         System.out.print("Type employee lastname: ");
-        var lastName = inputProcessor.readLine();
+        var lastName = inputProcessor.inputEmployeeData();
         System.out.println(companyRepository.getCompanyList());
         System.out.println("Type employee department name from list: ");
         showDepartments();
-        var departmentName = inputProcessor.readLine();
+        var departmentName = inputProcessor.inputDepartmentName();
         isDepartmentExist(companyName, departmentName);
-        // Czy ta petle ponizej robic streamami czy zostaje jak jest ?
-        for (Company company : companyRepository.getCompanyList()) {
+
+        //?????????????????????????????????????????????????????????????????????????????????????????????
+        // Czy dodanie pracownika zrobic streamami czy petla for ?
+        //przypisanie przy pomocy stream
+        companyRepository.getCompanyList().stream()
+                .filter(c -> c.getCompanyName().equals(companyName))
+                .flatMap(d -> d.getDepartmentList().stream())
+                .filter(d -> d.getDepartmentName().equals(departmentName))
+                .map(e -> e.getEmployeeList().add(new Employee(UUID.randomUUID(),
+                        firstName,
+                        lastName,
+                        newEmailAddress(firstName,
+                                lastName,
+                                companyName,
+                                passwordGenerator.generatePassword(5), 100))));
+
+        System.out.println();
+        System.out.println("Employee created: ");
+        System.out.println(companyName);
+        System.out.println(departmentName);
+        System.out.println(firstName);
+        System.out.println(lastName);
+        System.out.println();
+        return;
+
+        //przypisanie przy pomocy petli for
+        /*for (Company company : companyRepository.getCompanyList()) {
             if (company.getCompanyName().equals(companyName)) {
                 for (Department department : company.getDepartmentList()) {
                     if (department.getDepartmentName().equals(departmentName)) {
@@ -120,7 +145,7 @@ public class CompanyService {
                                 newEmailAddress(firstName,
                                         lastName,
                                         companyName,
-                                        passwordGenerator.generatePassword(5),100));
+                                        passwordGenerator.generatePassword(5), 100));
                         department.getEmployeeList().add(employee);
                         System.out.println();
                         System.out.println("Employee created: ");
@@ -133,7 +158,7 @@ public class CompanyService {
                     }
                 }
             }
-        }
+        }*/
     }
 
     public Email newEmailAddress(String firstName, String lastName, String companyName, String password, int capacity) {
@@ -254,9 +279,9 @@ public class CompanyService {
             return;
         }
         System.out.print("Type employee last name: ");
-        final var employeeLastName = inputProcessor.readLine();
+        final var employeeLastName = inputProcessor.inputEmployeeData();
         System.out.println("Type employee new last name: ");
-        final var newEmployeeLastName = inputProcessor.readLine();
+        final var newEmployeeLastName = inputProcessor.inputEmployeeData();
         var department = companyRepository.getCompanyList().stream()
                 .filter(c -> c.getCompanyName().equals(companyName))
                 .flatMap(c -> c.getDepartmentList().stream())
