@@ -61,13 +61,6 @@ public class CompanyService {
         }
     }
 
-
-    /*
-        public Company createCompany() {
-            Company company = emailAppConsole.inputCompanyName();
-            return emailAppCrud.companyCreate(company.getUuid(), company.getCompanyName());
-        }
-    */
     public void createCompany() {
         var name = inputProcessor.inputCompanyName();
         companyRepository.companyCreate(UUID.randomUUID(), name);
@@ -112,6 +105,7 @@ public class CompanyService {
 
         //?????????????????????????????????????????????????????????????????????????????????????????????
         // Czy dodanie pracownika zrobic streamami czy petla for ?
+
         //przypisanie przy pomocy stream
         companyRepository.getCompanyList().stream()
                 .filter(c -> c.getCompanyName().equals(companyName))
@@ -317,6 +311,7 @@ public class CompanyService {
     }
 
     public void companyDelete() {
+        System.out.println("Type company name to delete: ");
         var companyName = inputProcessor.inputCompanyName();
         if (isCompanyExist(companyName)) {
             return;
@@ -437,7 +432,7 @@ public class CompanyService {
 
     public void exit() {
         System.out.println("Bye bye");
-        System.exit(0);
+        System.exit(2);
     }
 
 

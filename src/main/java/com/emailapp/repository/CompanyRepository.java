@@ -56,7 +56,14 @@ public class CompanyRepository {
     private final Department department4 = new Department(UUID.randomUUID(), "Finance", new ArrayList<>(List.of(employee30, employee31, employee32, employee33, employee34, employee35, employee36, employee37, employee38, employee39)));
     private final Company company1 = new Company(UUID.randomUUID(), "abc", new ArrayList<>(List.of(department1, department2)));
     private final Company company2 = new Company(UUID.randomUUID(), "google", new ArrayList<>(List.of(department3, department4)));
-    private final List<Company> companyList = new ArrayList<>(List.of(company1, company2));
+    private  List<Company> companyList; // = new ArrayList<>(List.of(company1, company2));
+
+    public CompanyRepository(ArrayList<Company> companyList) {
+        this.companyList = companyList;
+    }  // ArrayList czy samo List ??
+    public CompanyRepository() {
+        this.companyList = new ArrayList<>(List.of(company1, company2));
+    }
 
     /*public EmailAppCrud() {
         this.companyList = new ArrayList<>();
@@ -89,9 +96,16 @@ public class CompanyRepository {
 
     // Delete
     public void companyDelete(String name) {
-        final var companyToDelete = companyList.stream()
+        /*final var companyToDelete = companyList.stream()
                 .filter(c -> c.getCompanyName().equals(name))
                 .findAny().get();
-        companyList.remove(companyToDelete);
+        companyList.remove(companyToDelete);*/
+        //companyList.removeIf(company -> company.getCompanyName().equals(name)); kolekcja
+        for (var company : companyList) {
+            if (company.getCompanyName().equals(name)) {
+                companyList.remove(company);
+            }
+
+        }
     }
 }
