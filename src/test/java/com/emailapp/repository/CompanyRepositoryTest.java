@@ -97,59 +97,41 @@ class CompanyRepositoryTest {
     @Test
     void should_update_company_name() {
         // given
-        final var newCompanyName1 = "Nowa nazwa firmy1";
-        //final var newCompanyName2 = "Nowa nazwa firmy2";
+        final var newCompanyName1 = "New company name1";
+        final var newCompanyName2 = "New company name2";
+        final var companyName1 = companyRepository2.getCompanyList().get(0).getCompanyName();
+        final var companyName2 = companyRepository2.getCompanyList().get(1).getCompanyName();
 
         // when
-        System.out.println(company3.getCompanyName());
-        //System.out.println(companyList2.get(1).getCompanyName());
-        System.out.println();
-        companyRepository2.companyNameUpdate(company3.getCompanyName(), newCompanyName1);
-        //companyRepository2.companyNameUpdate(companyList2.get(1).getCompanyName(), newCompanyName2);
-        //System.out.println(companyList2.get(0).getCompanyName());
-        companyRepository2.getCompanyList().stream()
-                .map(Company::getCompanyName)
-                .forEach(System.out::println);
-
-        System.out.println();
-        System.out.println(company3.getCompanyName());
-        System.out.println();
-        //System.out.println(companyList2.get(1).getCompanyName());
+        companyRepository2.companyNameUpdate(companyName1, newCompanyName1);
+        companyRepository2.companyNameUpdate(companyName2, newCompanyName2);
 
         // then
-        companyRepository2.getCompanyList().stream()
-                .map(Company::getCompanyName)
-                .forEach(System.out::println);
-        System.out.println();
-
-        for (var company : companyRepository2.getCompanyList()) {
-            System.out.println(company.getCompanyName());
-        }
-
-        var a = companyRepository2.getCompanyList().stream()
-                .map(Company::getCompanyName)
-                .findAny().get();
-
-        System.out.println("wyswietl " + a);
         assertEquals(newCompanyName1, companyRepository2.getCompanyList().stream()
                 .map(Company::getCompanyName)
-                        .findAny().get());
+                .filter(c -> c.equals(newCompanyName1))
+                .findFirst().get());
 
-        //assertEquals(newCompanyName2, companyList2.get(1).getCompanyName());
+        assertEquals(newCompanyName2, companyRepository2.getCompanyList().stream()
+                .map(Company::getCompanyName)
+                .filter(c -> c.equals(newCompanyName2))
+                .findFirst().get());
     }
 
     @Test
     void should_delete_company() {
         // given
-        final var name = company3.getCompanyName();
+        final var name = companyRepository2.getCompanyList().get(0).getCompanyName();
 
         // when
         companyRepository2.getCompanyList().remove(name);
+
         // then
         assertDoesNotThrow(() -> companyRepository2.companyDelete(name));
         assertEquals(name, companyList2.stream()
-                .map(c -> c.getCompanyName().equals(name))
-                .findAny().toString());
+                .map(Company::getCompanyName)
+                .filter(c -> c.equals(name))
+                .findAny().get());
 
     }
 }
