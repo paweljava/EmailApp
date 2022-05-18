@@ -68,6 +68,7 @@ public class CompanyService {
 
     public void createDepartment() {
         System.out.print("Type company name to add department: ");
+        showCompanies();
         var companyName = inputProcessor.inputCompanyName();
         if (isCompanyExist(companyName)) {
             return;
@@ -399,7 +400,7 @@ public class CompanyService {
 
     public boolean isCompanyExist(String companyName) {
         if (companyRepository.getCompanyList().stream()
-                .noneMatch(company -> company.getCompanyName().equals(companyName))) {
+                .noneMatch(c -> c.getCompanyName().equals(companyName))) {
             System.out.println("Wrong company name or not exist");
             System.out.println();
             return true;

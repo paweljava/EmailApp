@@ -56,11 +56,12 @@ public class CompanyRepository {
     private final Department department4 = new Department(UUID.randomUUID(), "Finance", new ArrayList<>(List.of(employee30, employee31, employee32, employee33, employee34, employee35, employee36, employee37, employee38, employee39)));
     private final Company company1 = new Company(UUID.randomUUID(), "abc", new ArrayList<>(List.of(department1, department2)));
     private final Company company2 = new Company(UUID.randomUUID(), "google", new ArrayList<>(List.of(department3, department4)));
-    private  List<Company> companyList; // = new ArrayList<>(List.of(company1, company2));
+    private List<Company> companyList; // = new ArrayList<>(List.of(company1, company2));
 
     public CompanyRepository(ArrayList<Company> companyList) {
         this.companyList = companyList;
     }  // ArrayList czy samo List ??
+
     public CompanyRepository() {
         this.companyList = new ArrayList<>(List.of(company1, company2));
     }

@@ -9,20 +9,6 @@ public class Employee {
     private UUID uuid = UUID.randomUUID();
     private String firstName;
     private String lastName;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Employee employee = (Employee) o;
-        return Objects.equals(uuid, employee.uuid) && Objects.equals(firstName, employee.firstName) && Objects.equals(lastName, employee.lastName) && Objects.equals(email, employee.email);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(uuid, firstName, lastName, email);
-    }
-
     private Email email;
 
     public Employee(UUID uuid, String firstName, String lastName, Email email) {

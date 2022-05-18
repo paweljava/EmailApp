@@ -74,9 +74,6 @@ class CompanyRepositoryTest {
 
         // when
         final var result = companyRepository2.companyCreate(uuid, name);
-        companyRepository2.getCompanyList().stream()
-                .map(Company::getCompanyName)
-                .forEach(System.out::println);
 
         // then
         assertEquals(uuid, result.getUuid());
@@ -110,12 +107,12 @@ class CompanyRepositoryTest {
         assertEquals(newCompanyName1, companyRepository2.getCompanyList().stream()
                 .map(Company::getCompanyName)
                 .filter(c -> c.equals(newCompanyName1))
-                .findFirst().get());
+                .findAny().get());
 
         assertEquals(newCompanyName2, companyRepository2.getCompanyList().stream()
                 .map(Company::getCompanyName)
                 .filter(c -> c.equals(newCompanyName2))
-                .findFirst().get());
+                .findAny().get());
     }
 
     @Test
