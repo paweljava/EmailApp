@@ -126,6 +126,11 @@ class CompanyRepositoryTest {
             System.out.println(company.getCompanyName());
         }
 
+        var a = companyRepository2.getCompanyList().stream()
+                .map(Company::getCompanyName)
+                .findAny().get();
+
+        System.out.println("wyswietl " + a);
         assertEquals(newCompanyName1, companyRepository2.getCompanyList().stream()
                 .map(Company::getCompanyName)
                         .findAny().get());
