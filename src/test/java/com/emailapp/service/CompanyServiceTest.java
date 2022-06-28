@@ -10,7 +10,6 @@ import org.mockito.Mockito;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import static java.util.UUID.randomUUID;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -28,36 +27,15 @@ class CompanyServiceTest {
     private CompanyService companyService = new CompanyService(companyRepository, inputProcessor, passwordGenerator);
     //private CompanyService companyService = new CompanyService(new CompanyRepository(), new InputProcessor(), new PasswordGenerator());
 
+
     @Test
     void createCompany() {
         // given
-        final var id = randomUUID();
-        var company1 = new Company("Samsung");
-        var company2 = new Company("Sony");
-        var company3 = new Company("Panasonic");
-        //var company4 = new Company("Sharp");
-        var companyList2 = new ArrayList<>(List.of(company1, company2, company3));
-        final String name = "Sharp";
-        given(inputProcessor.inputCompanyName()).willReturn("Sharp");
-        given(companyRepository.getCompanyList()).willReturn(companyList2);
-        //given(companyRepository.getCompanyList()).willReturn(new ArrayList<>(List.of(company1, company2, company3)));
-
         // when
         companyService.createCompany();
 
-
-        //var result = companyServiceTest.createCompany();
-        /*companyRepository.getCompanyList().stream()
-                .map(Company::getCompanyName)
-                .forEach(System.out::println);*/
-
         // then
-        Mockito.verify(companyRepository).companyCreate(any(),any());
-
-        /*assertEquals(name, companyRepository.getCompanyList().stream()
-                .map(c -> c.getCompanyName())
-                .filter(c -> c.equals(name))
-                .findFirst().get());*/
+        Mockito.verify(companyRepository).companyCreate(any(), any());
     }
 
     @Test
@@ -97,20 +75,10 @@ class CompanyServiceTest {
         final var company = new Company(id, companyName, departmentList);
         final var companyList = new ArrayList<>(List.of(company));
 
-
-        /*var department = new Department(id, departmentName);
-        var departmentList = new ArrayList<>(List.of(department));
-        //var company = new Company(id, companyName, departmentList);
-        final var company = new Company(id, companyName);
-        //final var companyList = new ArrayList<>(List.of(company));
-        */
-
         given(inputProcessor.inputEmployeeData()).willReturn(employee.getLastName());
         given(inputProcessor.inputDepartmentName()).willReturn(departmentName);
         given(inputProcessor.inputCompanyName()).willReturn(companyName);
-
         given(companyRepository.getCompanyList()).willReturn(companyList);
-        //given(companyRepository.getCompanyList().get(0).getDepartmentList()).willReturn(List.of(department));
 
         // when
         companyService.createEmployee();
@@ -118,94 +86,124 @@ class CompanyServiceTest {
         // then
         Mockito.verify(companyRepository, times(7)).getCompanyList();
     }
-/*
+
     @Test
     void newEmailAddress() {
         // given
+        var firstName = "Jan";
+        var lastName = "Kowalski";
+        var companyName = "Microsoft";
+        var password = "qwerty";
+        var capacity = 199;
+        var address = firstName + "." + lastName + "." + "@" + companyName + ".com";
 
         // when
+        var result = companyService.newEmailAddress(firstName, lastName, companyName, password, capacity);
 
         // then
+        assertEquals(address, result.getAddress());
+        assertEquals(password, result.getPassword());
+        assertEquals(capacity, result.getCapacity());
     }
 
     @Test
     void showCompanies() {
         // given
-
         // when
-
+        companyRepository.getCompanyList();
         // then
+        Mockito.verify(companyRepository).getCompanyList();
     }
 
     @Test
     void showDepartments() {
         // given
+        given(inputProcessor.inputCompanyName()).willReturn("Apple");
 
         // when
+        companyService.showDepartments();
 
         // then
+
+        //Mockito.verify(companyService).showDepartments();
     }
 
     @Test
     void showEmployees() {
         // given
-
+        given(inputProcessor.inputCompanyName()).willReturn("Apple");
+        given(inputProcessor.inputDepartmentName()).willReturn("Sales");
         // when
+        companyService.showEmployees();
 
         // then
+        Mockito.verify(companyService).showEmployees();
     }
 
     @Test
     void updateCompanyName() {
         // given
+        given(inputProcessor.inputCompanyName()).willReturn("Apple");
+        given(inputProcessor.inputNewCompanyName()).willReturn("Microsoft");
 
         // when
+        companyService.updateCompanyName();
 
         // then
+        Mockito.verify(companyRepository).companyNameUpdate("Apple", "Microsoft");
     }
 
     @Test
     void updateDepartmentName() {
         // given
+        given(inputProcessor.inputCompanyName()).willReturn("Apple");
+        given(inputProcessor.inputDepartmentName()).willReturn("HR");
+        given(inputProcessor.inputNewDepartmentName()).willReturn("Production");
 
         // when
+        companyService.updateDepartmentName();
 
         // then
+        Mockito.verify(companyService).updateDepartmentName();
     }
 
     @Test
     void updateEmployeeName() {
         // given
-
         // when
+        companyService.updateEmployeeName();
 
         // then
+        Mockito.verify(companyService).updateEmployeeName();
     }
 
     @Test
     void companyDelete() {
         // given
-
         // when
+        companyService.companyDelete();
 
         // then
+        Mockito.verify(companyService).companyDelete();
     }
 
     @Test
     void departmentDelete() {
         // given
-
         // when
+        companyService.departmentDelete();
 
         // then
+        Mockito.verify(companyService).departmentDelete();
     }
 
     @Test
     void employeeDelete() {
         // given
-
         // when
+        companyService.employeeDelete();
 
         // then
-    }*/
+        Mockito.verify(companyService).employeeDelete();
+    }
 }

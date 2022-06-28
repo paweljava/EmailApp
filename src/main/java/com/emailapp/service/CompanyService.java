@@ -192,7 +192,7 @@ public class CompanyService {
 
     public void showEmployees() {
         System.out.println("Type company name: ");
-        final var companyName = inputProcessor.readLine();
+        final var companyName = inputProcessor.inputCompanyName();
         if (isCompanyExist(companyName)) {
             return;
         }
@@ -222,9 +222,9 @@ public class CompanyService {
     public void updateCompanyName() {
         System.out.print("Type company name to change: ");
         var companyName = inputProcessor.inputCompanyName();
-        System.out.println(); // zobaczymy roznice
+        System.out.println();
         System.out.print("Type new company name: ");
-        var newCompanyName = inputProcessor.inputCompanyName();
+        var newCompanyName = inputProcessor.inputNewCompanyName();
         if (isCompanyExist(companyName)) {
             return;
         }
@@ -244,7 +244,7 @@ public class CompanyService {
             return;
         }
         System.out.print("Type new department name: ");
-        var newDepartmentName = inputProcessor.inputCompanyName();
+        var newDepartmentName = inputProcessor.inputNewDepartmentName();
         var company = companyRepository.getCompanyList().stream()
                 .filter(c -> c.getCompanyName().equals(companyName))
                 .findAny().get();

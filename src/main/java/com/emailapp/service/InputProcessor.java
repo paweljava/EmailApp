@@ -1,8 +1,5 @@
 package com.emailapp.service;
 
-import com.emailapp.repository.CompanyRepository;
-
-import java.util.Random;
 import java.util.Scanner;
 
 
@@ -22,7 +19,19 @@ public class InputProcessor {
         return name;
     }
 
+    public String inputNewCompanyName() {
+        var name = readLine();
+        System.out.println();
+        return name;
+    }
+
     public String inputDepartmentName() {
+        var name = readLine();
+        System.out.println();
+        return name;
+    }
+
+    public String inputNewDepartmentName() {
         var name = readLine();
         System.out.println();
         return name;
