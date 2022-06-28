@@ -106,7 +106,6 @@ public class CompanyRepository {
             if (company.getCompanyName().equals(name)) {
                 companyList.remove(company);
             }
-
         }
     }
 }

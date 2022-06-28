@@ -10,9 +10,6 @@ import java.util.UUID;
 
 public class CompanyService {
 
-    /*    public EmailAppCrud emailAppCRUD = new EmailAppCrud();
-        public EmailAppConsole emailAppConsole = new EmailAppConsole() {
-        };*/
     private final CompanyRepository companyRepository;
     private final InputProcessor inputProcessor;
     private final PasswordGenerator passwordGenerator;
@@ -322,14 +319,14 @@ public class CompanyService {
     }
 
     public void departmentDelete() {
-        System.out.println("Type company name from list");
-        showCompanies();
+        System.out.println("Type company name");
+        //showCompanies();
         var companyName = inputProcessor.inputCompanyName();
         if (isCompanyExist(companyName)) {
             return;
         }
-        System.out.println("Type department name from list");
-        showDepartments();
+        System.out.println("Type department name");
+        //showDepartments();
         var departmentName = inputProcessor.inputCompanyName();
         if (!isDepartmentExist(companyName, departmentName)) {
             return;
@@ -357,8 +354,7 @@ public class CompanyService {
                 .flatMap(d -> d.getDepartmentList().stream())
                 .filter(department -> department.getDepartmentName().equals(departmentName))
                 .findAny().get());
-        var findDepartmentList
-                = companyRepository.getCompanyList().stream()
+        var findDepartmentList= companyRepository.getCompanyList().stream()
                 .filter(company -> company.getCompanyName().equals(companyName))
                 .findAny().get();
         findDepartmentList.getDepartmentList().remove(departmentToDelete);

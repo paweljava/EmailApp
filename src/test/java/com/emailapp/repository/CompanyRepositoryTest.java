@@ -64,7 +64,7 @@ class CompanyRepositoryTest {
     private Company company4 = new Company(UUID.randomUUID(), "Dell", new ArrayList<>(List.of(department3, department4)));
     private List<Company> companyList2 = new ArrayList<>(List.of(company3, company4));
 
-    private CompanyRepository companyRepository2 = new CompanyRepository(new ArrayList<>(companyList2));
+    private CompanyRepository companyRepository = new CompanyRepository(new ArrayList<>(companyList2));
 
     @Test
     void should_add_company() {
@@ -73,7 +73,7 @@ class CompanyRepositoryTest {
         final var name = "Nazwa firmy";
 
         // when
-        final var result = companyRepository2.companyCreate(uuid, name);
+        final var result = companyRepository.companyCreate(uuid, name);
 
         // then
         assertEquals(uuid, result.getUuid());
@@ -84,7 +84,7 @@ class CompanyRepositoryTest {
     void should_get_all_companies() {
         // given
         // when
-        final var result = companyRepository2.getCompanyList();
+        final var result = companyRepository.getCompanyList();
 
         // then
         assertFalse(result.isEmpty());
@@ -96,20 +96,20 @@ class CompanyRepositoryTest {
         // given
         final var newCompanyName1 = "New company name1";
         final var newCompanyName2 = "New company name2";
-        final var companyName1 = companyRepository2.getCompanyList().get(0).getCompanyName();
-        final var companyName2 = companyRepository2.getCompanyList().get(1).getCompanyName();
+        final var companyName1 = companyRepository.getCompanyList().get(0).getCompanyName();
+        final var companyName2 = companyRepository.getCompanyList().get(1).getCompanyName();
 
         // when
-        companyRepository2.companyNameUpdate(companyName1, newCompanyName1);
-        companyRepository2.companyNameUpdate(companyName2, newCompanyName2);
+        companyRepository.companyNameUpdate(companyName1, newCompanyName1);
+        companyRepository.companyNameUpdate(companyName2, newCompanyName2);
 
         // then
-        assertEquals(newCompanyName1, companyRepository2.getCompanyList().stream()
+        assertEquals(newCompanyName1, companyRepository.getCompanyList().stream()
                 .map(Company::getCompanyName)
                 .filter(c -> c.equals(newCompanyName1))
                 .findAny().get());
 
-        assertEquals(newCompanyName2, companyRepository2.getCompanyList().stream()
+        assertEquals(newCompanyName2, companyRepository.getCompanyList().stream()
                 .map(Company::getCompanyName)
                 .filter(c -> c.equals(newCompanyName2))
                 .findAny().get());
@@ -118,13 +118,13 @@ class CompanyRepositoryTest {
     @Test
     void should_delete_company() {
         // given
-        final var name = companyRepository2.getCompanyList().get(0).getCompanyName();
+        var name = companyRepository.getCompanyList().get(0).getCompanyName();
 
         // when
-        companyRepository2.getCompanyList().remove(name);
+        companyRepository.getCompanyList().remove(name);
 
         // then
-        assertDoesNotThrow(() -> companyRepository2.companyDelete(name));
+        assertDoesNotThrow(() -> companyRepository.companyDelete(name));
         assertEquals(name, companyList2.stream()
                 .map(Company::getCompanyName)
                 .filter(c -> c.equals(name))
